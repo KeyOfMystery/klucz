@@ -6,80 +6,94 @@
     <title>Dla Ciebie</title>
     <style>
         body { background: white; color: black; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; text-align: center; }
-        h1 { font-size: 2.2rem; margin-bottom: 30px; padding: 0 20px; font-weight: bold; }
-        .box { border: 2px solid black; padding: 25px; margin: 15px; width: 85%; max-width: 350px; min-height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        input { width: 80%; padding: 12px; margin: 10px 0; border: 1px solid black; font-size: 1rem; text-align: center; outline: none; background: white; color: black; }
-        button { background: black; color: white; border: none; padding: 12px 25px; font-weight: bold; cursor: pointer; width: 85%; }
-        audio { width: 100%; margin-top: 15px; }
+        h1 { font-size: 2rem; margin-bottom: 20px; padding: 0 20px; font-weight: bold; }
+        .box { border: 2px solid black; padding: 30px; margin: 15px; width: 85%; max-width: 350px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        input { width: 85%; padding: 12px; margin: 15px 0; border: 1px solid black; font-size: 1rem; text-align: center; outline: none; }
+        button { background: black; color: white; border: none; padding: 12px 25px; font-weight: bold; cursor: pointer; width: 90%; text-transform: uppercase; }
+        audio { width: 100%; margin-top: 20px; }
         .hidden { display: none; }
-        p { font-size: 1.1rem; line-height: 1.4; margin: 10px 0; }
+        p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <h1>Wszystkiego Najlepszego Kochanie :*</h1>
-
-    <!-- 1. EKRAN STARTOWY (GŁÓWNE HASŁO) -->
-    <div id="gatekeeper" class="box">
-        <p>Aby wejść, wpisz hasło:</p>
-        <input type="password" id="main-pass" placeholder="...">
-        <button onclick="unlockMain()">OTWÓRZ</button>
+    <div id="stage1">
+        <h1>Wszystkiego Najlepszego Kochanie :*</h1>
+        <div class="box">
+            <p>Aby wejść, wpisz hasło:</p>
+            <input type="password" id="pass-stage1" placeholder="Password 1">
+            <button onclick="goToStage2()">OTWÓRZ</button>
+        </div>
     </div>
 
-    <!-- 2. ZAWARTOŚĆ STRONY -->
-    <div id="main-content" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-        
-        <!-- SEKCJA 1 -->
+    <div id="stage2" class="hidden">
+        <h1>Nasze chwile...</h1>
         <div class="box">
-            <div id="lock1">
-                <input type="password" id="pass1" placeholder="Hasło...">
-                <button onclick="unlockAudio(1, HASLO_1)">ODBLOKUJ</button>
+            <div id="lock-audio1">
+                <p>Wpisz drugie hasło:</p>
+                <input type="password" id="pass-stage2" placeholder="Password 2">
+                <button onclick="unlockAudio1()">ODBLOKUJ ŻYCZENIA</button>
             </div>
-            <div id="content1" class="hidden">
+            <div id="content-audio1" class="hidden">
                 <p>Jesteś dla mnie bardzo ważna...</p>
-                <audio id="audio1" controls><source src="audio1.mp3" type="audio/mpeg"></audio>
+                <audio id="audio1" controls preload="auto">
+                    <source src="audio1.mp3" type="audio/mpeg">
+                </audio>
+                <br><br>
+                <button onclick="goToStage3()" style="background: white; color: black; border: 1px solid black;">DALEJ →</button>
             </div>
         </div>
+    </div>
 
-        <!-- SEKCJA 2 -->
+    <div id="stage3" class="hidden">
+        <h1>Coś jeszcze...</h1>
         <div class="box">
-            <div id="lock2">
-                <input type="password" id="pass2" placeholder="Hasło...">
-                <button onclick="unlockAudio(2, HASLO_2)">ODBLOKUJ</button>
+            <div id="lock-audio2">
+                <p>Wpisz ostatnie hasło:</p>
+                <input type="password" id="pass-stage3" placeholder="Password 3">
+                <button onclick="unlockAudio2()">ODBLOKUJ PIOSENKĘ</button>
             </div>
-            <div id="content2" class="hidden">
+            <div id="content-audio2" class="hidden">
                 <p>...dlatego tutaj jest coś bardzo ważnego kochanie...</p>
-                <audio id="audio2" controls><source src="audio2.mp3" type="audio/mpeg"></audio>
+                <audio id="audio2" controls preload="auto">
+                    <source src="audio2.mp3" type="audio/mpeg">
+                </audio>
             </div>
         </div>
-
     </div>
 
     <script>
-        // --- TUTAJ ZMIEŃ SWOJE HASŁA ---
-        const HASLO_GLOWNE = "KOCHAMCIE";   // Hasło do wejścia na stronę
-        const HASLO_1 = "UWIELBIAM";       // Hasło do pierwszej wiadomości
-        const HASLO_2 = "PRAGNE";       // Hasło do drugiej wiadomości
+        // KONFIGURACJA HASEŁ
+        const H1 = "KOCHAMCIE";
+        const H2 = "UWIELBIAM";
+        const H3 = "PRAGNE";
 
-        function unlockMain() {
-            const input = document.getElementById('main-pass').value;
-            if (input === HASLO_GLOWNE) {
-                document.getElementById('gatekeeper').classList.add('hidden');
-                document.getElementById('main-content').classList.remove('hidden');
-            } else {
-                alert("Nieprawidłowe hasło!");
-            }
+        function goToStage2() {
+            if (document.getElementById('pass-stage1').value === H1) {
+                document.getElementById('stage1').classList.add('hidden');
+                document.getElementById('stage2').classList.remove('hidden');
+            } else { alert("Błędne hasło!"); }
         }
 
-        function unlockAudio(num, correctPass) {
-            const input = document.getElementById('pass' + num).value;
-            if (input === correctPass) {
-                document.getElementById('lock' + num).classList.add('hidden');
-                document.getElementById('content' + num).classList.remove('hidden');
-                document.getElementById('audio' + num).play();
-            } else {
-                alert("To nie to hasło...");
-            }
+        function unlockAudio1() {
+            if (document.getElementById('pass-stage2').value === H2) {
+                document.getElementById('lock-audio1').classList.add('hidden');
+                document.getElementById('content-audio1').classList.remove('hidden');
+                document.getElementById('audio1').play();
+            } else { alert("To nie to hasło..."); }
+        }
+
+        function goToStage3() {
+            document.getElementById('stage2').classList.add('hidden');
+            document.getElementById('stage3').classList.remove('hidden');
+        }
+
+        function unlockAudio2() {
+            if (document.getElementById('pass-stage3').value === H3) {
+                document.getElementById('lock-audio2').classList.add('hidden');
+                document.getElementById('content-audio2').classList.remove('hidden');
+                document.getElementById('audio2').play();
+            } else { alert("Niepoprawne hasło!"); }
         }
     </script>
 </body>
