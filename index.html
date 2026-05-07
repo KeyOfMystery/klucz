@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dla Ciebie</title>
     <style>
-        /* Główne style dla wyśrodkowania */
+        /* Główne style dla wyśrodkowania na każdej stronie */
         html, body {
             height: 100%;
             margin: 0;
@@ -17,44 +17,44 @@
             color: black;
             font-family: "Arial", sans-serif;
             text-align: center;
+            overflow: hidden; /* Zapobiega przewijaniu */
         }
 
-        /* Styl dla nagłówka na górze każdej strony */
+        /* Styl dla nagłówka na górze każdej strony, idealnie wyśrodkowany */
         .main-header {
-            font-size: 3rem; /* Znacznie większy napis */
+            font-size: 2.5rem; /* Zwiększony napis */
             font-weight: bold;
-            margin-bottom: 50px;
-            padding: 0 20px;
             position: fixed; /* Stała pozycja na górze */
             top: 20px;
             width: 100%;
+            padding: 0 20px;
             box-sizing: border-box;
+            z-index: 100; /* Zawsze na górze */
         }
 
-        /* Styl dla ramki/kontenera */
+        /* Styl dla kontenera box, wyśrodkowany */
         .box {
             border: 2px solid black;
             padding: 40px;
-            margin: 20px;
             width: 90%;
             max-width: 400px;
             box-sizing: border-box;
             background: white;
-            z-index: 10; /* Aby był nad nagłówkiem w razie przewijania */
+            z-index: 10;
         }
 
-        /* Style dla pól wprowadzania i przycisków */
+        /* Style dla pól wprowadzania */
         input {
             width: 100%;
             padding: 15px;
             margin: 15px 0;
             border: 1px solid black;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-align: center;
             box-sizing: border-box;
-            outline: none;
         }
 
+        /* Style dla przycisków - neutralne */
         button {
             width: 100%;
             padding: 15px;
@@ -62,7 +62,6 @@
             color: white;
             border: none;
             font-weight: bold;
-            font-size: 1.1rem;
             cursor: pointer;
             text-transform: uppercase;
         }
@@ -74,13 +73,7 @@
         /* Styl dla odtwarzacza audio */
         audio {
             width: 100%;
-            margin-top: 25px;
-        }
-
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            margin-top: 20px;
         }
 
         /* Klasa do ukrywania elementów */
@@ -101,12 +94,11 @@
 
     <div id="stage2" class="box hidden">
         <div id="lock-audio1">
-            <p><strong>Dla mojej Ważnej...</strong><br>Wpisz drugie hasło:</p>
+            <p>Wpisz drugie hasło:</p>
             <input type="password" id="pass-stage2" placeholder="Password 2">
-            <button onclick="unlockAudio1()">ODBLOKUJ ŻYCZENIA</button>
+            <button onclick="unlockAudio1()">NIESPODZIANKA A</button>
         </div>
         <div id="content-audio1" class="hidden">
-            <p>Jesteś dla mnie bardzo ważna...</p>
             <audio id="audio1" controls preload="auto">
                 <source src="audio1.mp3" type="audio/mpeg">
             </audio>
@@ -117,12 +109,11 @@
 
     <div id="stage3" class="box hidden">
         <div id="lock-audio2">
-            <p><strong>Dla mojego Serduszka...</strong><br>Wpisz ostatnie hasło:</p>
+            <p>Wpisz ostatnie hasło:</p>
             <input type="password" id="pass-stage3" placeholder="Password 3">
-            <button onclick="unlockAudio2()">ODBLOKUJ PIOSENKĘ</button>
+            <button onclick="unlockAudio2()">NIESPODZIANKA B</button>
         </div>
         <div id="content-audio2" class="hidden">
-            <p>...dlatego tutaj jest coś bardzo ważnego kochanie...</p>
             <audio id="audio2" controls preload="auto">
                 <source src="audio2.mp3" type="audio/mpeg">
             </audio>
@@ -130,19 +121,16 @@
     </div>
 
     <script>
-        // --- KONFIGURACJA HASEŁ ---
+        // HASŁA
         const H1 = "KOCHAMCIE"; // Password 1
         const H2 = "UWIELBIAM";  // Password 2
         const H3 = "PRAGNE";     // Password 3
 
-        // Logika przejścia między etapami
         function goToStage2() {
             if (document.getElementById('pass-stage1').value.toUpperCase() === H1) {
                 document.getElementById('stage1').classList.add('hidden');
                 document.getElementById('stage2').classList.remove('hidden');
-            } else {
-                alert("To nie to hasło... Spróbuj jeszcze raz!");
-            }
+            } else { alert("Błędne hasło!"); }
         }
 
         function unlockAudio1() {
@@ -150,9 +138,7 @@
                 document.getElementById('lock-audio1').classList.add('hidden');
                 document.getElementById('content-audio1').classList.remove('hidden');
                 document.getElementById('audio1').play();
-            } else {
-                alert("To nie to hasło...");
-            }
+            } else { alert("To nie to hasło..."); }
         }
 
         function goToStage3() {
@@ -165,9 +151,7 @@
                 document.getElementById('lock-audio2').classList.add('hidden');
                 document.getElementById('content-audio2').classList.remove('hidden');
                 document.getElementById('audio2').play();
-            } else {
-                alert("Błędne hasło do tej niespodzianki!");
-            }
+            } else { alert("Niepoprawne hasło!"); }
         }
     </script>
 </body>
