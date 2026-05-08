@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dla Ciebie</title>
     <style>
+        /* Nowe ustawienia dla odtwarzacza, żeby nie był "płaski" na mobile */
+        audio {
+            width: 100%;
+            height: 50px; /* Wymuszamy wysokość */
+            margin-top: 25px;
+            display: block;
+            border-radius: 30px; /* Zaokrąglamy, żeby wyglądał nowocześnie */
+            background: #f1f3f4;
+        }
+
+        /* Dodatkowy margines dla tekstu nad audio */
+        .box p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Naprawa dla iPhone, żeby nie ucinało kontrolek */
+        audio::-webkit-media-controls-panel {
+            background-color: #f1f3f4;
+        }
         /* Główne style dla wyśrodkowania na każdej stronie */
         html, body {
             height: 100%;
@@ -97,10 +117,11 @@
             <p>Wpisz drugie hasło:</p>
             <input type="password" id="pass-stage2" placeholder="Password 2">
             <button onclick="unlockAudio1()">NIESPODZIANKA A</button>
-        </div>
         <div id="content-audio1" class="hidden">
-            <audio id="audio1" controls preload="auto">
+            <p>Jesteś dla mnie bardzo ważna...</p>
+            <audio id="audio1" controls preload="auto" style="height: 54px;">
                 <source src="audio1.mp3" type="audio/mpeg">
+                Twoja przeglądarka nie obsługuje odtwarzacza.
             </audio>
             <br><br>
             <button onclick="goToStage3()" style="background: white; color: black; border: 1px solid black;">DALEJ →</button>
@@ -114,8 +135,10 @@
             <button onclick="unlockAudio2()">NIESPODZIANKA B</button>
         </div>
         <div id="content-audio2" class="hidden">
-            <audio id="audio2" controls preload="auto">
+            <p>...dlatego tutaj jest coś bardzo ważnego kochanie...</p>
+            <audio id="audio2" controls preload="auto" style="height: 54px;">
                 <source src="audio2.mp3" type="audio/mpeg">
+                Twoja przeglądarka nie obsługuje odtwarzacza.
             </audio>
         </div>
     </div>
