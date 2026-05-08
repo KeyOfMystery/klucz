@@ -5,30 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dla Ciebie</title>
     <style>
-        /* Nowe ustawienia dla odtwarzacza, żeby nie był "płaski" na mobile */
-        audio {
-            width: 100%;
-            height: 50px; /* Wymuszamy wysokość */
-            margin-top: 25px;
-            display: block;
-            border-radius: 30px; /* Zaokrąglamy, żeby wyglądał nowocześnie */
-            background: #f1f3f4;
-        }
-
-        /* Dodatkowy margines dla tekstu nad audio */
-        .box p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        /* Naprawa dla iPhone, żeby nie ucinało kontrolek */
-        audio::-webkit-media-controls-panel {
-            background-color: #f1f3f4;
-        }
-        /* Główne style dla wyśrodkowania na każdej stronie */
+        /* Reset i tło */
         html, body {
             height: 100%;
             margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -37,33 +18,33 @@
             color: black;
             font-family: "Arial", sans-serif;
             text-align: center;
-            overflow: hidden; /* Zapobiega przewijaniu */
+            overflow: hidden;
         }
 
-        /* Styl dla nagłówka na górze każdej strony, idealnie wyśrodkowany */
+        /* Napis na górze - stały i duży */
         .main-header {
-            font-size: 2.5rem; /* Zwiększony napis */
+            font-size: 2.2rem;
             font-weight: bold;
-            position: fixed; /* Stała pozycja na górze */
-            top: 20px;
+            position: fixed;
+            top: 40px;
             width: 100%;
             padding: 0 20px;
             box-sizing: border-box;
-            z-index: 100; /* Zawsze na górze */
+            z-index: 100;
         }
 
-        /* Styl dla kontenera box, wyśrodkowany */
+        /* Główna ramka */
         .box {
             border: 2px solid black;
-            padding: 40px;
-            width: 90%;
-            max-width: 400px;
+            padding: 30px;
+            width: 85%;
+            max-width: 380px;
             box-sizing: border-box;
             background: white;
             z-index: 10;
         }
 
-        /* Style dla pól wprowadzania */
+        /* Style pól tekstowych */
         input {
             width: 100%;
             padding: 15px;
@@ -72,9 +53,10 @@
             font-size: 1rem;
             text-align: center;
             box-sizing: border-box;
+            outline: none;
         }
 
-        /* Style dla przycisków - neutralne */
+        /* Przyciski */
         button {
             width: 100%;
             padding: 15px;
@@ -84,21 +66,33 @@
             font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
+            font-size: 1rem;
         }
 
-        button:hover {
-            opacity: 0.8;
-        }
-
-        /* Styl dla odtwarzacza audio */
+        /* Naprawa odtwarzacza na mobile */
         audio {
             width: 100%;
+            height: 54px; /* Kluczowe dla widoczności na iPhone */
             margin-top: 20px;
+            display: block;
         }
 
-        /* Klasa do ukrywania elementów */
+        p {
+            font-size: 1.1rem;
+            line-height: 1.4;
+            margin: 0 0 15px 0;
+        }
+
         .hidden {
             display: none;
+        }
+
+        /* Specjalny styl dla przycisku DALEJ */
+        .btn-next {
+            background: white;
+            color: black;
+            border: 1px solid black;
+            margin-top: 25px;
         }
     </style>
 </head>
@@ -117,14 +111,14 @@
             <p>Wpisz drugie hasło:</p>
             <input type="password" id="pass-stage2" placeholder="Password 2">
             <button onclick="unlockAudio1()">NIESPODZIANKA A</button>
+        </div>
         <div id="content-audio1" class="hidden">
             <p>Jesteś dla mnie bardzo ważna...</p>
-            <audio id="audio1" controls preload="auto" style="height: 54px;">
+            <audio id="audio1" controls preload="auto">
                 <source src="audio1.mp3" type="audio/mpeg">
-                Twoja przeglądarka nie obsługuje odtwarzacza.
+                Twoja przeglądarka nie obsługuje audio.
             </audio>
-            <br><br>
-            <button onclick="goToStage3()" style="background: white; color: black; border: 1px solid black;">DALEJ →</button>
+            <button onclick="goToStage3()" class="btn-next">DALEJ →</button>
         </div>
     </div>
 
@@ -135,32 +129,32 @@
             <button onclick="unlockAudio2()">NIESPODZIANKA B</button>
         </div>
         <div id="content-audio2" class="hidden">
-            <p>...dlatego tutaj jest coś bardzo ważnego kochanie...</p>
-            <audio id="audio2" controls preload="auto" style="height: 54px;">
+            <p>dlatego tutaj jest coś bardzo ważnego...</p>
+            <audio id="audio2" controls preload="auto">
                 <source src="audio2.mp3" type="audio/mpeg">
-                Twoja przeglądarka nie obsługuje odtwarzacza.
+                Twoja przeglądarka nie obsługuje audio.
             </audio>
         </div>
     </div>
 
     <script>
-        // HASŁA
-        const H1 = "KOCHAMCIE"; // Password 1
-        const H2 = "UWIELBIAM";  // Password 2
-        const H3 = "PRAGNE";     // Password 3
+        const H1 = "KOCHAMCIE";
+        const H2 = "UWIELBIAM";
+        const H3 = "PRAGNE";
 
         function goToStage2() {
-            if (document.getElementById('pass-stage1').value.toUpperCase() === H1) {
+            const val = document.getElementById('pass-stage1').value.toUpperCase().trim();
+            if (val === H1) {
                 document.getElementById('stage1').classList.add('hidden');
                 document.getElementById('stage2').classList.remove('hidden');
             } else { alert("Błędne hasło!"); }
         }
 
         function unlockAudio1() {
-            if (document.getElementById('pass-stage2').value.toUpperCase() === H2) {
+            const val = document.getElementById('pass-stage2').value.toUpperCase().trim();
+            if (val === H2) {
                 document.getElementById('lock-audio1').classList.add('hidden');
                 document.getElementById('content-audio1').classList.remove('hidden');
-                document.getElementById('audio1').play();
             } else { alert("To nie to hasło..."); }
         }
 
@@ -170,10 +164,10 @@
         }
 
         function unlockAudio2() {
-            if (document.getElementById('pass-stage3').value.toUpperCase() === H3) {
+            const val = document.getElementById('pass-stage3').value.toUpperCase().trim();
+            if (val === H3) {
                 document.getElementById('lock-audio2').classList.add('hidden');
                 document.getElementById('content-audio2').classList.remove('hidden');
-                document.getElementById('audio2').play();
             } else { alert("Niepoprawne hasło!"); }
         }
     </script>
